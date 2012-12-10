@@ -5,13 +5,16 @@ class Product < ActiveRecord::Base
 
 
   has_many :property_assignments
+  has_many :property_assignments_v, :class_name => 'PropertyAssignment'
+  has_many :property_assignments_e, :class_name => 'PropertyAssignment'
+
   has_many :properties, through: :property_assignments
 
-  has_many :name_values, through: :property_assignments,
+  has_many :name_values, through: :property_assignments_v,
                          source: :property,
                          conditions: proc { ["properties.name = ?", Product.name_property] }
 
-  has_many :external_id_values, through: :property_assignments,
+  has_many :external_id_values, through: :property_assignments_e,
                                 source: :property,
                                 conditions: proc { ["properties.name = ?", Product.external_id_property] }
 
