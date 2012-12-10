@@ -21,6 +21,10 @@ describe Product do
   end  
 
   specify "external id doesn't change when retrieved from scope w both includes" do
-    Product.scoped.first.includes(:name_values, :external_id_values).external_id.should eq @product.external_id
-  end  
+    Product.scoped.includes(:name_values, :external_id_values).first.external_id.should eq @product.external_id
+  end
+
+  specify "including properties includes all properties" do
+    Product.scoped.includes(:name_values, :properties).first.properties.to_a.count.should eq @product.properties.to_a.count
+  end
 end
